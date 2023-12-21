@@ -15,7 +15,7 @@ export default function ListBox({ selected, setSelected, data }) {
         }
     }
     return (
-        <div className="md:mx-14 bg-white dark:bg-gray-900 text-white shadow-sm shadow-gray-700 rounded-lg -translate-y-24">
+        <div className="md:mx-14 bg-white dark:bg-gray-900 text-black dark:text-white shadow-sm shadow-gray-700 rounded-lg -translate-y-24">
             <div className="border-b p-[22px] flex items-center justify-between">
                 <div className="flex items-center">
                     <div className="md:block w-6 md:w-14">
@@ -40,7 +40,7 @@ export default function ListBox({ selected, setSelected, data }) {
                         <GrRefresh size={20} className="mr-2 animate-spin" />
                         Refresh
                     </PrimaryButton>
-                    <PrimaryButton 
+                    <PrimaryButton
                         type="button"
                         className="px-2 py-1.5 text-[12px] text-white dark:text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-700 hover:dark:bg-blue-700 focus:bg-blue-600 dark:focus:bg-blue-700 active:bg-blue-700 dark:active:bg-blue-800"
                         // onClick={() => router.visit('dashboard.cronChapters', { only: ['bookmarks'] })}
@@ -52,7 +52,7 @@ export default function ListBox({ selected, setSelected, data }) {
                     </PrimaryButton>
                 </div>
             </div>
-            <ul className="divide-y">
+            <ul className="divide-y text-black dark:text-white">
                 {data.map((item, index) => (
                     <li key={item.id} className="p-6 flex items-center">
                         <div className="flex w-6 md:w-14 px-0 items-center">

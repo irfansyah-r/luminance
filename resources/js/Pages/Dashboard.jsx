@@ -24,27 +24,27 @@ export default function Dashboard(props) {
                     <div className="bg-white sm:px-8 lg:px-12 dark:bg-gray-800 shadow-sm">
                         <div className="pt-8 px-3 md:px-2 pb-32 flex flex-col md:flex-row space-y-2 md:space-y-0 items-center max-w-full md:justify-between">
                             <div className="flex w-full items-center flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2">
-                                <Selector 
+                                <Selector
                                     key="readingStatus"
                                     className="md:w-[166px] lg:w-48"
                                     options={readingStatusOption}
                                     preSelected={readingStatusOption[0]}
                                 />
-                                <Selector 
+                                <Selector
                                     key="filterTags"
                                     placeholder="Filter by tags"
                                     className="md:w-[166px] lg:w-48"
                                     options={tagsOptions}
                                     preSelected={tagsOptions[0]}
                                 />
-                                <Selector 
+                                <Selector
                                     key="mangaStatus"
                                     className="md:w-[166px] lg:w-48"
                                     options={mangaStatusOption}
                                     preSelected={mangaStatusOption[0]}
                                 />
                                 <div className="w-full flex grow md:justify-end ">
-                                    <Selector 
+                                    <Selector
                                         key="searchManga"
                                         className="md:w-[166px] lg:w-60"
                                         options={tagsOptions}
@@ -57,7 +57,7 @@ export default function Dashboard(props) {
                         </div>
                     </div>
                 </div>
-                <ListBox 
+                <ListBox
                     selected={selectedManga}
                     setSelected={setSelectedManga}
                     data={props.bookmarks}

@@ -22,10 +22,10 @@ export default function Selector({ placeholder, options, active, className, isSe
 
     return (
         <div className={twMerge(className, 'w-full')} ref={ref}>
-            {isSelectDropdown && 
+            {isSelectDropdown &&
                 <>
-                    <div 
-                        className={twMerge(className, `w-full px-3 py-1 flex items-center justify-between cursor-default rounded bg-white active:outline outline-sky-600`)}
+                    <div
+                        className={twMerge(className, `w-full px-3 py-1 flex items-center justify-between cursor-default rounded bg-white active:outline outline-sky-600 border-2`)}
                         onClick={(e) => setOpen(!open)}
                     >
                         { selected?.label.length > 14 ? selected?.label.substring(0, 14) + "..." : selected?.label }
@@ -33,12 +33,12 @@ export default function Selector({ placeholder, options, active, className, isSe
                             <BiChevronDown size={20} className={`${open && 'rotate-180'} transition-all duration-300'}`} />
                         </div>
                     </div>
-                    <ul 
-                        className={twMerge(className, `w-full md:inset-x-auto inset-x-0 md:px-0 px-3 sm:px-11 bg-transparent absolute z-10 rounded-md mt-2 overflow-y-auto ${open ? 'max-h-72' : 'max-h-0'}`)}>
-                        <div className="w-full rounded overflow-x-hidden">{options ? 
-                            options.map((option, index) => (    
-                                <li key={index} 
-                                    className={twMerge(className, `${selected === option && 'font-bold'} w-full p-2 bg-white cursor-pointer hover:bg-gray-300 flex items-center justify-between`)}
+                    <ul
+                        className={twMerge(className, `w-full md:inset-x-auto inset-x-0 md:px-0 px-3 sm:px-11 bg-transparent absolute z-10 rounded-md mt-2 overflow-y-auto ${open ? 'max-h-72 border-2' : 'max-h-0'}`)}>
+                        <div className="w-full rounded overflow-x-hidden">{options ?
+                            options.map((option, index) => (
+                                <li key={index}
+                                    className={twMerge(className, `${selected === option && 'font-bold'} w-full p-2 bg-white cursor-pointer hover:bg-gray-300 flex items-center justify-between border-b-[1px]`)}
                                     onClick={() => {
                                         setSelected(option)
                                         setOpen(false)
@@ -46,7 +46,7 @@ export default function Selector({ placeholder, options, active, className, isSe
                                 >
                                     {option?.label} {selected === option && <GrCheckmark />}
                                 </li>
-                            )) : 
+                            )) :
                             <li className="p-2 text-sm hover:bg-sky-100 rounded">Empty</li>
                         }
                         </div>
@@ -56,10 +56,10 @@ export default function Selector({ placeholder, options, active, className, isSe
             {isInputbox &&
                 <>
                     <div>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             className={twMerge(className, `rounded px-3 py-1 w-full`)}
-                            placeholder="Input manga title" 
+                            placeholder="Input manga title"
                             onChange={handleInputboxChange}
                         />
                     </div>

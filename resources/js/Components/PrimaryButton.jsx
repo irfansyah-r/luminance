@@ -18,7 +18,7 @@ export default function PrimaryButton({ type = 'submit', className = '', process
                 >
                     {children}
                 </button>
-            ) : (        
+            ) : (
                 <Link
                     type={type}
                     onClick={onClick}

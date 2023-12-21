@@ -43,21 +43,21 @@ class DashboardController extends Controller
             $i = 0;
             foreach ($xml->li as $item) {
                 $get_chapters[$i]['manga_website_id'] = $manga_website->id;
-                $get_chapters[$i]['number'] = preg_replace("/\r\n|\n|\r|Chapter /", '', $item->a->__toString());
+                $get_chapters[$i]['number'] = trim(preg_replace("/\r\n|\n|\r|Chapter /", '', $item->a->__toString()));
                 $get_chapters[$i]['url'] = $item->a['href']->__toString();
                 $i++;
             }
             $chapters = Chapter::where('manga_website_id', $manga_website->id)->orderBy('id', 'desc')->get();
             $last_chapter = $chapters->first();
-            if ($last_chapter !== null && $get_chapters[0]['number'] === $last_chapter->number) {
-                continue;
+            if (!($last_chapter !== null && ($get_chapters[0]['number'] === $last_chapter->number))) {
+                $get_chapters = array_reverse($get_chapters);
+                if (count($get_chapters) > count($chapters) && count($chapters) !== 0) {
+                    $get_chapters = array_slice($get_chapters, count($chapters), count($get_chapters));
+                }
+                Chapter::insertOrIgnore($get_chapters);
+                // continue;
                 // return response('There are no new chapters for this manga on this website.');
             }
-            $get_chapters = array_reverse($get_chapters);
-            if (count($get_chapters) > count($chapters) && count($chapters) !== 0) {
-                $get_chapters = array_slice($get_chapters, count($chapters), count($get_chapters));
-            }
-            Chapter::insertOrIgnore($get_chapters);
 
             $bookmark = Bookmark::where('manga_website_id', $manga_website->id)->first();
             if ($bookmark !== null) {
