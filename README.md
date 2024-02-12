@@ -16,8 +16,6 @@ CrossSite Manga Tracker (for learning purposes).
 
 ### Installing
 
-### Installing
-
 * Buka Command Prompt pada folder Project dan jalankan perintah :
 ```
 composer install
