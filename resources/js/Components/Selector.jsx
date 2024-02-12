@@ -3,7 +3,7 @@ import { BiChevronDown } from 'react-icons/bi';
 import { GrCheckmark } from 'react-icons/gr';
 import { twMerge } from 'tailwind-merge';
 
-export default function Selector({ placeholder, options, active, className, isSelectDropdown = true, isInputbox = false, handleInputboxChange }) {
+export default function Selector({ placeholder, options, active, className, isSelectDropdown = true, isInputbox = false, handleChange }) {
     const [selected, setSelected] = useState(active ? active : placeholder ? {value: null, label: placeholder} : options ? options[0] : "Select Options" );
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
@@ -30,17 +30,18 @@ export default function Selector({ placeholder, options, active, className, isSe
                     >
                         { selected?.label.length > 14 ? selected?.label.substring(0, 14) + "..." : selected?.label }
                         <div className="flex border-l-[2px] border-gray-300">
-                            <BiChevronDown size={20} className={`${open && 'rotate-180'} transition-all duration-300'}`} />
+                            <BiChevronDown size={20} className={`${open && '-rotate-180'} transition-all duration-300'}`} />
                         </div>
                     </div>
                     <ul
-                        className={twMerge(className, `w-full md:inset-x-auto inset-x-0 md:px-0 px-3 sm:px-11 bg-transparent absolute z-10 rounded-md mt-2 overflow-y-auto ${open ? 'max-h-72 border-2' : 'max-h-0'}`)}>
+                        className={twMerge(className, `w-full md:inset-x-auto inset-x-0 md:px-0 px-3 sm:px-11 bg-transparent absolute z-10 rounded-md mt-2 overflow-y-auto ${open ? 'max-h-72' : 'max-h-0'}`)}>
                         <div className="w-full rounded overflow-x-hidden">{options ?
                             options.map((option, index) => (
                                 <li key={index}
-                                    className={twMerge(className, `${selected === option && 'font-bold'} w-full p-2 bg-white cursor-pointer hover:bg-gray-300 flex items-center justify-between border-b-[1px]`)}
+                                    className={twMerge(className, `${selected === option && 'font-bold'} ${index == 0 && 'border-t-[1px]'} w-full p-2 bg-white cursor-pointer hover:bg-gray-300 flex items-center justify-between border-b-[1px] border-x-2`)}
                                     onClick={() => {
                                         setSelected(option)
+                                        handleChange(option.value)
                                         setOpen(false)
                                     }}
                                 >
@@ -60,7 +61,7 @@ export default function Selector({ placeholder, options, active, className, isSe
                             type="text"
                             className={twMerge(className, `rounded px-3 py-1 w-full`)}
                             placeholder="Input manga title"
-                            onChange={handleInputboxChange}
+                            onChange={handleChange}
                         />
                     </div>
                 </>

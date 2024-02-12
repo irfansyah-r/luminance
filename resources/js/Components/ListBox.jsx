@@ -14,8 +14,9 @@ export default function ListBox({ selected, setSelected, data }) {
             setSelected(selected.filter(item => item !== el.attributes['data-key'].value))
         }
     }
+
     return (
-        <div className="md:mx-14 bg-white dark:bg-gray-900 text-black dark:text-white shadow-sm shadow-gray-700 rounded-lg -translate-y-24">
+        <div className="md:mx-14 bg-white border-t dark:border-black dark:bg-gray-800 text-black dark:text-white shadow-lg shadow-gray-300 dark:shadow-none rounded-lg -translate-y-24">
             <div className="border-b p-[22px] flex items-center justify-between">
                 <div className="flex items-center">
                     <div className="md:block w-6 md:w-14">
@@ -54,7 +55,7 @@ export default function ListBox({ selected, setSelected, data }) {
             </div>
             <ul className="divide-y text-black dark:text-white">
                 {data.map((item, index) => (
-                    <li key={item.id} className="p-6 flex items-center">
+                    <li key={item.id} className="p-6 flex items-center hover:bg-gray-100 dark:hover:bg-gray-900">
                         <div className="flex w-6 md:w-14 px-0 items-center">
                             <div className="hidden md:block">
                                 <Checkbox dataKey={item.id} name={"mangaList"} className="basis-1/2" handleChange={(e) => handleCheckboxChange(e.target)}/>

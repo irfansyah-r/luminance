@@ -9,7 +9,10 @@ import Select, { components  } from 'react-select';
 
 export default function Dashboard(props) {
     const [selectedManga, setSelectedManga] = useState([]);
-    console.log(props);
+    const [readingStatus, setReadingStatus] = useState();
+    const [mangaStatus, setMangaStatus] = useState();
+    const [tags, setTags] = useState();
+    console.log(readingStatus, mangaStatus, tags, );
 
     return (
         <AuthenticatedLayout
@@ -29,6 +32,7 @@ export default function Dashboard(props) {
                                     className="md:w-[166px] lg:w-48"
                                     options={readingStatusOption}
                                     preSelected={readingStatusOption[0]}
+                                    handleChange={setReadingStatus}
                                 />
                                 <Selector
                                     key="filterTags"
@@ -36,12 +40,14 @@ export default function Dashboard(props) {
                                     className="md:w-[166px] lg:w-48"
                                     options={tagsOptions}
                                     preSelected={tagsOptions[0]}
+                                    handleChange={setTags}
                                 />
                                 <Selector
                                     key="mangaStatus"
                                     className="md:w-[166px] lg:w-48"
                                     options={mangaStatusOption}
                                     preSelected={mangaStatusOption[0]}
+                                    handleChange={setMangaStatus}
                                 />
                                 <div className="w-full flex grow md:justify-end ">
                                     <Selector
@@ -50,7 +56,7 @@ export default function Dashboard(props) {
                                         options={tagsOptions}
                                         isSelectDropdown={false}
                                         isInputbox={true}
-                                        handleInputboxChange={(e) => console.log(e.target.value)}
+                                        handleChange={(e) => console.log(e.target.value)}
                                     />
                                 </div>
                             </div>
