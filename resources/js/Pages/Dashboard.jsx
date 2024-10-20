@@ -4,13 +4,13 @@ import { Head } from '@inertiajs/react';
 import { readingStatusOption, mangaStatusOption, tagsOptions, mangaList } from '@/Data/Constant';
 import Selector from '@/Components/Selector';
 import ListBox from '@/Components/ListBox';
-
-import Select, { components  } from 'react-select';
+import { RxMagnifyingGlass } from 'react-icons/rx';
+import { PiSortAscending } from "react-icons/pi";
 
 export default function Dashboard(props) {
     const [selectedManga, setSelectedManga] = useState([]);
-    const [readingStatus, setReadingStatus] = useState();
-    const [mangaStatus, setMangaStatus] = useState();
+    const [readingStatus, setReadingStatus] = useState(readingStatusOption[0].value);
+    const [mangaStatus, setMangaStatus] = useState(mangaStatusOption[0].value);
     const [tags, setTags] = useState();
     console.log(readingStatus, mangaStatus, tags, );
 
@@ -31,7 +31,6 @@ export default function Dashboard(props) {
                                     key="readingStatus"
                                     className="md:w-[166px] lg:w-48"
                                     options={readingStatusOption}
-                                    preSelected={readingStatusOption[0]}
                                     handleChange={setReadingStatus}
                                 />
                                 <Selector
@@ -39,25 +38,37 @@ export default function Dashboard(props) {
                                     placeholder="Filter by tags"
                                     className="md:w-[166px] lg:w-48"
                                     options={tagsOptions}
-                                    preSelected={tagsOptions[0]}
                                     handleChange={setTags}
                                 />
                                 <Selector
                                     key="mangaStatus"
                                     className="md:w-[166px] lg:w-48"
                                     options={mangaStatusOption}
-                                    preSelected={mangaStatusOption[0]}
                                     handleChange={setMangaStatus}
+                                    prefix={
+                                        <>
+                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+                                                <span className="text-gray-500 sm:text-sm">
+                                                    <PiSortAscending size="20" />
+                                                </span>
+                                            </div>
+                                        </>
+                                    }
                                 />
                                 <div className="w-full flex grow md:justify-end ">
-                                    <Selector
-                                        key="searchManga"
-                                        className="md:w-[166px] lg:w-60"
-                                        options={tagsOptions}
-                                        isSelectDropdown={false}
-                                        isInputbox={true}
-                                        handleChange={(e) => console.log(e.target.value)}
-                                    />
+                                    <div className="relative">
+                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+                                            <span className="text-gray-500 sm:text-sm">
+                                                <RxMagnifyingGlass size="20" />
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="md:w-[166px] lg:w-60 rounded px-3 py-1 w-full pl-8"
+                                            placeholder="Input manga title"
+                                            onChange={(e) => console.log(e.target.value)}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,10 +1,25 @@
 import { Link, Head } from '@inertiajs/react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { AiOutlineClose } from 'react-icons/ai';
+import { IoClose } from "react-icons/io5";
 
 export default function Welcome(props) {
     const [isOpen, setIsOpen] = useState(false);
+    const [theme, setTheme] = useState(localStorage.theme ? localStorage.theme : 'Dark');
+
+    useEffect(() => {
+        localStorage.theme = theme;
+
+        if(localStorage.theme == "Light"){
+            document.documentElement.classList.remove("dark");
+            document.querySelectorAll('#switchTheme').forEach((item) => item.checked = true);
+        }else{
+            document.documentElement.classList.add("dark");
+            document.querySelectorAll('#switchTheme').forEach((item) => item.checked = false);
+        }
+    }, [theme])
+
     return (
         <>
             <Head title="Welcome" />
@@ -24,12 +39,23 @@ export default function Welcome(props) {
                                 fill="#0b5796"
                             />
                         </svg>
-                        <div onClick={() => setIsOpen(true)} className="active:bg-transparent dark:active:bg-gray-800 p-2 rounded-lg">
-                            <GiHamburgerMenu className="text-gray-500 text-xl cursor-pointer" />
+                        <div>
+                            <div className="mr-4 align-center py-2">
+                                <input className="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-neutral-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-primary dark:checked:after:bg-primary dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
+                                    type="checkbox" role="switch" id="switchTheme"
+                                    onChange={() => {
+                                        setTheme(theme == 'Dark' ? 'Light' : 'Dark');
+                                    }}
+                                />
+                                    {/* <label className="relative pl-[0.15rem] hover:cursor-pointer text-black dark:text-white" htmlFor="switchTheme">{theme}</label> */}
+                            </div>
+                            <div onClick={() => setIsOpen(true)} className="active:bg-transparent dark:active:bg-gray-800 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <GiHamburgerMenu className="text-gray-400 text-xl cursor-pointer" />
+                            </div>
                         </div>
                     </div>
-                    <div className={`${!isOpen && 'hidden'} absolute left-0 top-0 w-full z-10 pt-0`}>
-                        <div className="px-5 py-4 rounded bg-white dark:bg-gray-800 shadow-md">
+                    <div className={`${isOpen ?  'opacity-1 top-0 left-0 ' : 'opacity-0 -top-full -right-full'} transition-opacity duration-200 absolute right-5 px-3 w-full z-10 pt-2`}>
+                        <div className="px-5 py-4 rounded bg-white dark:bg-gray-800 shadow-lg">
                             <div className="flex items-center justify-between">
                                 <svg
                                     viewBox="0 0 62 65"
@@ -43,8 +69,8 @@ export default function Welcome(props) {
                                         fill="#0b5796"
                                     />
                                 </svg>
-                                <span onClick={() => setIsOpen(false)} className="active:bg-red-500 p-1 rounded-lg">
-                                    <AiOutlineClose size="22" className="text-black dark:text-gray-100 cursor-pointer hover:text-red-500" />
+                                <span onClick={() => setIsOpen(false)} className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <IoClose size="27" className="text-gray-400 cursor-pointer" />
                                 </span>
                             </div>
                             <div className="flex flex-col my-3 text-white">
@@ -64,7 +90,7 @@ export default function Welcome(props) {
                                     <>
                                         <Link
                                             href={route('login')}
-                                            className="py-2 px-3 rounded-md shadow-md shadow-gray-200 border dark:border-none dark:shadow-gray-800 font-semibold text-blue-400 dark:text-blue-700 bg-white dark:bg-gray-100 hover:bg-gray-100 hover:dark:bg-gray-200 active:bg-gray-800 dark:active:bg-gray-100 focus:ring-2 focus:ring-blue-700"
+                                            className="py-2 px-3 rounded-md shadow-md shadow-gray-200 border dark:border-none dark:shadow-gray-800 font-semibold text-blue-400 dark:text-blue-700 bg-white dark:bg-gray-100 hover:bg-gray-50 hover:dark:bg-gray-200 active:bg-gray-800 dark:active:bg-gray-100 focus:ring-2 focus:ring-blue-700"
                                             // className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Log in
@@ -106,6 +132,15 @@ export default function Welcome(props) {
                             </div>
                         </div>
                         <div className="flex items-center">
+                            <div className="mr-4 align-center py-2">
+                                <input className="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-neutral-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-primary dark:checked:after:bg-primary dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
+                                    type="checkbox" role="switch" id="switchTheme"
+                                    onChange={() => {
+                                        setTheme(theme == 'Dark' ? 'Light' : 'Dark');
+                                    }}
+                                />
+                                    {/* <label className="relative pl-[0.15rem] hover:cursor-pointer text-black dark:text-white" htmlFor="switchTheme">{theme}</label> */}
+                            </div>
                             {props.auth.user ? (
                                 <Link
                                     href={route('dashboard')}
@@ -117,7 +152,7 @@ export default function Welcome(props) {
                                 <>
                                     <Link
                                         href={route('login')}
-                                        className="py-1 px-3 border dark:border-none rounded-md shadow-md shadow-gray-300 dark:shadow-gray-800 font-semibold text-blue-700 dark:text-blue-700 bg-white dark:bg-gray-100 hover:bg-gray-100 hover:dark:bg-gray-200 active:bg-gray-800 dark:active:bg-gray-100 focus:ring-2 focus:ring-blue-700"
+                                        className="py-1 px-3 border dark:border-none rounded-md shadow-md shadow-gray-300 dark:shadow-gray-800 font-semibold text-blue-700 dark:text-blue-700 bg-white dark:bg-gray-100 hover:bg-gray-50 hover:dark:bg-gray-200 active:bg-gray-800 dark:active:bg-gray-100 focus:ring-2 focus:ring-blue-700"
                                         // className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                     >
                                         Log in
@@ -148,7 +183,7 @@ export default function Welcome(props) {
                         >Start tracking now.</Link>
                     </div>
                     <div className="flex">
-                        <img src={'assets/image/Kenmei.jpg'} alt="kenmei" className="mb-2 lg:-right-1/2 md:right-0 -right-12 relative w-full rounded-lg shadow shadow-gray-600" />
+                        <img src={'assets/image/Kenmei.jpg'} alt="kenmei" className="mb-10 lg:-right-1/2 md:right-0 -right-10 relative w-full rounded-lg shadow-lg shadow-gray-600 dark:shadow-gray-800" />
                     </div>
                 </div>
             </div>

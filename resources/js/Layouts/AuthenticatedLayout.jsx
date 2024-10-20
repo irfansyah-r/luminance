@@ -4,9 +4,23 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [theme, setTheme] = useState(localStorage.theme ? localStorage.theme : 'Dark');
+
+    useEffect(() => {
+        localStorage.theme = theme;
+
+        if(localStorage.theme == "Light"){
+            document.documentElement.classList.remove("dark");
+            document.querySelectorAll('#switchTheme').forEach((item) => item.checked = true);
+        }else{
+            document.documentElement.classList.add("dark");
+            document.querySelectorAll('#switchTheme').forEach((item) => item.checked = false);
+        }
+    }, [theme])
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">

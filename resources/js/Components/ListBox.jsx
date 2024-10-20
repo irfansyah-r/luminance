@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { router } from '@inertiajs/react'
 
-import { GrRefresh, GrAdd } from 'react-icons/gr';
+import { GrRefresh } from 'react-icons/gr';
+import { GoPlus } from "react-icons/go";
 import Checkbox from '@/Components/Checkbox';
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function ListBox({ selected, setSelected, data }) {
+export default function ListBox({ selected, setSelected, data, limit = 50, offset = 0 }) {
 
     const handleCheckboxChange = (el) => {
         if (el.checked) {
@@ -14,9 +15,10 @@ export default function ListBox({ selected, setSelected, data }) {
             setSelected(selected.filter(item => item !== el.attributes['data-key'].value))
         }
     }
+    const [page, setPage] = useState(1);
 
     return (
-        <div className="md:mx-14 bg-white border-t dark:border-black dark:bg-gray-800 text-black dark:text-white shadow-lg shadow-gray-300 dark:shadow-none rounded-lg -translate-y-24">
+        <div className="md:mx-14 bg-white border-t dark:border-black dark:bg-gray-800 text-black dark:text-white shadow-lg shadow-gray-300 dark:shadow-none rounded-xl -translate-y-24">
             <div className="border-b p-[22px] flex items-center justify-between">
                 <div className="flex items-center">
                     <div className="md:block w-6 md:w-14">
@@ -33,7 +35,7 @@ export default function ListBox({ selected, setSelected, data }) {
                             }} />
                         </div>
                     </div>
-                    <span>Showing x of xx</span>
+                    <span>Showing {offset+1} to {data.length < limit ? data.length : (offset+limit)} of {data.length}</span>
                     {selected}
                 </div>
                 <div className="hidden md:block flex items-center space-x-4">
@@ -43,12 +45,12 @@ export default function ListBox({ selected, setSelected, data }) {
                     </PrimaryButton>
                     <PrimaryButton
                         type="button"
-                        className="px-2 py-1.5 text-[12px] text-white dark:text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-700 hover:dark:bg-blue-700 focus:bg-blue-600 dark:focus:bg-blue-700 active:bg-blue-700 dark:active:bg-blue-800"
+                        className="px-2 py-1.5 text-[12px] text-white dark:text-white bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 hover:dark:bg-blue-800 focus:bg-blue-600 dark:focus:bg-blue-700 active:bg-blue-700 dark:active:bg-blue-800"
                         // onClick={() => router.visit('dashboard.cronChapters', { only: ['bookmarks'] })}
                         href={route('dashboard.cronChapters')}
                         only={['bookmarks']}
                     >
-                        <GrAdd size={20} className="mr-2" />
+                        <GoPlus size={20} className="mr-2 text-white" />
                         Add Manga
                     </PrimaryButton>
                 </div>
@@ -73,6 +75,16 @@ export default function ListBox({ selected, setSelected, data }) {
                     </li>
                 ))}
             </ul>
+            <div className="border-t p-[22px] flex items-center justify-between">
+                <div className="flex items-center">
+                    <div className="md:block w-6 md:w-14">
+                    </div>
+                    <span>Showing {offset+1} to {offset == 0 ? data.length : (offset+limit)} of {data.length}</span>
+                </div>
+                <div className="hidden md:block flex items-center space-x-4">
+
+                </div>
+            </div>
         </div>
     )
 }
