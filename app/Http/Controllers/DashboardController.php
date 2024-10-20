@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Models\Manga;
-use App\Models\Chapter;
-use App\Models\Bookmark;
-use App\Models\MangaWebsite;
+use App\Models\Job;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
@@ -16,10 +14,17 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bookmarks = [];
-        return Inertia::render('Dashboard', compact('bookmarks'));
+        $keyword = $request->query('search');
+        $page = $request->query('page') ?: 1;
+        $jobs = Job::with(['services', 'createdBy', 'customer'])->when($keyword, function (Builder $query) use ($keyword) {
+            $query->where('description', '~*', $keyword)
+                ->orWhereRelation('createdBy', 'name', '~*', $keyword)
+                ->orWhereRelation('services', 'name', '~*', $keyword)
+                ->orWhereRelation('customer', 'name', '~*', $keyword);
+        })->paginate(10);
+        return Inertia::render('Dashboard', compact('jobs'));
         // return Inertia('Dashboard', compact('mangas'));
     }
 

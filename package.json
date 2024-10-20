@@ -15,13 +15,16 @@
         "postcss": "^8.4.18",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "sass": "^1.80.3",
         "tailwindcss": "^3.2.1",
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "query-string": "^9.1.1",
         "react-icons": "^5.0.1",
         "react-loading-skeleton": "^3.1.1",
         "react-select": "^5.7.0",
-        "tailwind-merge": "^1.9.1"
+        "tailwind-merge": "^1.9.1",
+        "use-debounce": "^10.0.4"
     }
 }
