@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 export default function PrimaryButton({ type = 'submit', className = '', processing, children, onClick, href, props }) {
     return (
         <>
-            {type === 'submit' ? (
+            {type === 'submit' || type == 'button' ? (
                 <button
                     type={type}
                     onClick={onClick}

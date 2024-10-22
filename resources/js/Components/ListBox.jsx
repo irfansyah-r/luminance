@@ -14,10 +14,15 @@ import { useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import queryString from 'query-string';
 import Selector from './Selector';
+import Modal from './Modal';
+import InputLabel from './InputLabel';
+import TextInput from './TextInput';
+import InputError from './InputError';
 
 export default function ListBox({ data, limit = 50, offset = 0 }) {
     const [selected, setSelected] = useState([]);
     const [filters, setFilters] = useState(queryString.parse(location.search));
+    const [showAddModal, setShowAddModal] = useState(false);
 
     const handleCheckboxChange = (el) => {
         if (el.checked) {
@@ -143,7 +148,8 @@ export default function ListBox({ data, limit = 50, offset = 0 }) {
                             type="button"
                             className="px-2 py-1.5 text-[12px] text-white dark:text-white bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 hover:dark:bg-blue-800 focus:bg-blue-600 dark:focus:bg-blue-700 active:bg-blue-700 dark:active:bg-blue-800"
                             // onClick={() => router.visit('dashboard.cronChapters', { only: ['bookmarks'] })}
-                            href={route('dashboard')}
+                            // href={route('dashboard')}
+                            onClick={() => setShowAddModal(true)}
                             only={['bookmarks']}
                         >
                             <GoPlus size={20} className="mr-2 text-white" />
@@ -189,6 +195,25 @@ export default function ListBox({ data, limit = 50, offset = 0 }) {
                     </div>
                 </div>
             </div>
+            <Modal show={showAddModal} onClose={setShowAddModal}>
+                <div className="p-4">
+                    <div className='flex items-center justify-between'>
+                        <span>Add Jobs</span>
+                        <button className='bg-red-200 rounded p-1 text-lg hover:bg-red-300 active:bg-red-200' onClick={() => setShowAddModal(false)}><RiCloseFill/></button>
+                    </div>
+                    <div className='p-4'>
+                        <form action="">
+                            <div className='flex'>
+                                <InputLabel className={'w-[250px] pt-1'}>Nama Customer</InputLabel>
+                                <div>
+                                    <TextInput type="text" name="nama" required={true} />
+                                    <InputError message={''} />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </Modal>
         </div>
     )
 }

@@ -17,7 +17,7 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
     }[maxWidth];
 
     return (
-        <Transition show={show} as={Fragment} leave="duration-200">
+        <Transition show={show} as={Fragment} leave="duration-200" onClick={() => close()}>
             <Dialog
                 as="div"
                 id="modal"
