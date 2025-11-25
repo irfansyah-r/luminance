@@ -6,7 +6,8 @@ Luminance App.
 
 ## Description
 
-CrossSite Manga Tracker. Track any manga for both official or unofficial translations in Bahasa Indonesia.
+CrossSite Manga Tracker. Track any manga for both official or unofficial translations sites in Bahasa Indonesia.
+Current plan, in dedicated server get manga info and updates from translations sites using API or scrape it manually and store it in database or send it to another service in another server. And in another server and a bookmarking application that can easily track and update current reading status of bookmarked manga.
 
 ## Getting Started
 
