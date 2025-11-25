@@ -6,7 +6,7 @@ Luminance App.
 
 ## Description
 
-CrossSite Manga Tracker (for learning purposes).
+CrossSite Manga Tracker. Track any manga for both official or unofficial translations in Bahasa Indonesia.
 
 ## Getting Started
 
