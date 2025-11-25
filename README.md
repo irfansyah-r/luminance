@@ -1,6 +1,8 @@
 # Project Title
 
 Luminance App.
+<img width="1600" height="787" alt="image" src="https://github.com/user-attachments/assets/3d35f9e0-8012-499b-9d82-824f50e0d735" />
+
 
 ## Description
 
